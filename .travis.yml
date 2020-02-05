@@ -78,6 +78,7 @@ jobs:
       env: DESC="py2 tests" PYTHON_VERSION=2.7
       
     - &conda_default
+      arch: arm64
       stage: test
       env: DESC="dev test_all"
       before_install:

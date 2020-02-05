@@ -85,10 +85,10 @@ jobs:
         # install doit/pyctdev and use to install miniconda...
         - sudo add-apt-repository "deb http://ports.ubuntu.com/ubuntu-ports/  eoan main universe"
         - sudo apt-get update
-        - sudo apt-get install $PYTHON_VERSION
+        - sudo apt-get install python3.6
         - sudo apt-get install python3-pip
         - sudo python3 --version
-        - sudo $PYTHON_VERSION -m pip install pyctdev
+        - sudo python3.6 -m pip install pyctdev
         - wget "https://github.com/Archiconda/build-tools/releases/download/0.2.3/Archiconda3-0.2.3-Linux-aarch64.sh" -O archiconda.sh
         - chmod +x archiconda.sh
         - bash archiconda.sh -b -p $HOME/miniconda

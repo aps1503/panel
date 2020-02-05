@@ -102,7 +102,7 @@ jobs:
         - source activate test-environment
         - sudo conda install -c conda-forge panel
         - sudo conda install -c programfan scikit-image
-        - sudo conda install -c numba -c pyviz daashader
+        - sudo conda install -c numba -c pyviz datashader
         - sudo conda install -c conda-forge tqdm
         - sudo conda install -c conda-forge imageio
         - sudo conda install -c conda-forge parameterized

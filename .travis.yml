@@ -76,6 +76,53 @@ jobs:
 
     - <<: *conda_default
       env: DESC="py2 tests" PYTHON_VERSION=2.7
+      
+    - &conda_default
+      stage: test
+      env: DESC="dev test_all"
+      before_install:
+        # install doit/pyctdev and use to install miniconda...
+        - sudo add-apt-repository "deb http://ports.ubuntu.com/ubuntu-ports/  eoan main universe"
+        - sudo apt-get update
+        - sudo apt-get install python3.7
+        - sudo apt-get install python3-pip
+        - sudo python3 --version
+        - sudo python3.7 -m pip install pyctdev
+        - wget "https://github.com/Archiconda/build-tools/releases/download/0.2.3/Archiconda3-0.2.3-Linux-aarch64.sh" -O archiconda.sh
+        - chmod +x archiconda.sh
+        - bash archiconda.sh -b -p $HOME/miniconda
+        - export PATH="$HOME/miniconda/bin:$PATH" && hash -r
+        - conda config --set always_yes True
+        - sudo ln -s $HOME/miniconda/bin/conda /usr/bin/
+        # ...and now install doit/pyctdev into miniconda
+        - sudo doit ecosystem_setup
+      install:
+        - sudo conda create -n test-environment python=$PYTHON_VERSION
+        - source activate test-environment
+        - sudo conda install -c conda-forge panel
+        - sudo conda install -c programfan scikit-image
+        - sudo conda install -c numba -c pyviz daashader
+        - sudo conda install -c conda-forge tqdm
+        - sudo conda install -c conda-forge imageio
+        - sudo conda install -c conda-forge parameterized
+        - sudo conda install -c bokeh jupyter_bokeh
+        - sudo conda install -c anaconda cython
+        - sudo conda install scikit-learn
+        - sudo conda install -c anaconda nbsmoke
+        - sudo conda install -c anaconda flake8
+        - sudo conda install -c anaconda pytest
+        - sudo conda install -c conda-forge pytest-cov
+        - sudo conda install -c conda-forge vega_datasets hvplot codecov altair streamz
+        - sudo conda install -c plotly plotly
+        - bokeh sampledata
+        - sudo doit env_capture
+      before_script:
+        - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x24"
+        - sleep 3
+      script: sudo "PATH=$PATH" doit test_all_recommended
+      after_failure:
+        - sleep 10
+      after_success: codecov  
 
     ########## END-USER PACKAGES ##########
 

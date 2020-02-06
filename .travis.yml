@@ -104,18 +104,19 @@ jobs:
         - sudo conda install -c conda-forge panel
         - sudo conda install -c programfan scikit-image
         - sudo conda install -c numba -c pyviz datashader
-        - sudo conda install -c conda-forge tqdm
-        - sudo conda install -c conda-forge imageio
+        #- sudo conda install -c conda-forge tqdm
+        #- sudo conda install -c conda-forge imageio
         - sudo conda install -c conda-forge parameterized
         - sudo conda install -c bokeh jupyter_bokeh
         - sudo conda install -c anaconda cython
         - sudo conda install scikit-learn
-        - sudo conda install -c anaconda nbsmoke
-        - sudo conda install -c anaconda flake8
-        - sudo conda install -c anaconda pytest
+        - sudo conda install -c anaconda nbsmoke jupyter_client flake8 pytest
+        #- sudo conda install -c anaconda flake8
+        #- sudo conda install -c anaconda pytest
         - sudo conda install -c conda-forge pytest-cov
         - sudo conda install -c conda-forge vega_datasets hvplot codecov altair streamz
         - sudo conda install -c plotly plotly
+        #- sudo conda install -c anaconda jupyter_client
         - bokeh sampledata
         - sudo doit env_capture
       before_script:
